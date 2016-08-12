@@ -1,0 +1,7 @@
+[ignore]
+
+[include]
+./app/assets/flow/**/*.js
+[libs]
+
+[options]

@@ -1,0 +1,33 @@
+{
+    "name": "decouple/framework",
+    "description": "Decouple Framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Ewing",
+            "email": "drew@phenocode.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "decouple/common": "dev-master",
+        "decouple/decoupler": "dev-master",
+        "decouple/cli": "dev-master",
+        "decouple/registry": "dev-master",
+        "decouple/orm": "dev-master",
+        "decouple/test": "dev-master",
+        "decouple/dbal": "dev-master",
+        "decouple/dbal-cli": "dev-master",
+        "decouple/http": "dev-master",
+        "decouple/log": "dev-master",
+        "decouple/ui": "dev-master",
+        "facebook/xhp-lib": "^2.0@dev"
+    },
+    "autoload": {
+      "psr-4": {
+        "Test\\": "test/",
+        "": "src/"
+      },
+      "classmap": ["app/views","app/controllers","app/database/models"]
+    }
+}
