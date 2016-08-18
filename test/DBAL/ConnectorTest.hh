@@ -7,7 +7,7 @@ class ConnectorTest extends TestCase {
   public function execute() : void {
     $connector = new DPDOConnector();
     $connected = $connector->connect(Map {
-      "dbname" => "decouple",
+      "dbname" => "decouple_test",
       "type" => "mysql",
       "host" => "localhost"
     }, "decouple", "secret");

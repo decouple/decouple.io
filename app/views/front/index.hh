@@ -5,7 +5,7 @@ class :front:index extends :decouple:ui:base {
     Schema schema @required,
     string title @required;
 
-  public function compose() : XHPRoot {
+  public function compose(): XHPRoot {
     return
       <layouts:front schema={$this->getAttribute('schema')} title={$this->getAttribute('title')}>
         <div>

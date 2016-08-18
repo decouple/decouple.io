@@ -1,8 +1,8 @@
 /* @flow */
 
-import React from 'react'
+import {h,Component} from 'preact'
 
-export default class Article extends React.Component {
+export default class Article extends Component {
   constructor(props) {
     super(props);
   }

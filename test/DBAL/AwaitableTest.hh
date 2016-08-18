@@ -18,7 +18,7 @@ class AwaitableTest extends TestCase {
       "decouple",
       "secret",
     );
-    $schema = $driver->schema('decouple');
+    $schema = $driver->schema('decouple_test');
     $articles = $schema->table('articles');
     $authors = $schema->table('authors');
 

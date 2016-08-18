@@ -11,7 +11,7 @@ class SchemaTest extends TestCase {
       "type" => "mysql",
       "host" => "localhost"
     }, "decouple", "secret");
-    $schema = $driver->schema('decouple');
+    $schema = $driver->schema('decouple_test');
     $failed = false;
     if(!$schema instanceof Schema) {
       $failed = true;

@@ -1,17 +1,16 @@
 <?hh // decl
-class :news:articleFullPage extends :x:element {
-  use XHPAsync;
+class :news:articleFullPage extends :decouple:ui:base {
   attribute
     KeyedTraversable<string,mixed> article @required;
 
-  public async function asyncRender(): Awaitable<XHPRoot> {
+  protected function compose(): XHPRoot {
     $article = $this->getAttribute('article');
     return
-      <div class="news--article__full-page" directive-link="foo" directive-to="/">
+      <div class="news--article__full-page">
         <div class="news--article-inner">
           <h4 class="news--article-title">{$article['title']}</h4>
           <div class="news--article-image">
-            <img src={$article['image']}/>
+            <img src={$article['image']} alt={$article['title']} />
           </div>
           <div class="news--article-content">
             <p class="news--article-description">{$article['content']}</p>

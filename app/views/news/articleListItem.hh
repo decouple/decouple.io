@@ -1,10 +1,9 @@
 <?hh // decl
 class :news:articleListItem extends :x:element {
-  use XHPAsync;
   attribute
     KeyedTraversable<string,mixed> article @required;
 
-  public async function asyncRender(): Awaitable<XHPRoot> {
+  protected function render(): XHPRoot {
     $article = $this->getAttribute('article');
     return
       <a class="news--article" href={"/news/article/" . $article['id']}>

@@ -1,26 +1,32 @@
 import Directive from '../decouple/directive.js'
+import Transclude from '../components/transclude.js'
+import {h} from 'preact'
+/** @jsx h */
 
 export default class LinkDirective extends Directive {
-  prepend : bool;
-  constructor(props) {
-    super(props);
-    this.prepend = true;
+  transclude : bool;
+  constructor(scope) {
+    super(scope);
+    this.transclude = true;
   }
 
   static get attribute() : string {
     return "link";
   }
 
-  static get scope() : array {
-    return ['to'];
+  static get injects() : array {
+    return ['NewsResource'];
   }
 
-  boot() : void {
-    return '<a href="/">Link</a>';
+  static get scoped() : array {
+    return ['link'];
+  }
+
+  render() : void {
+    return <a href={this.scope.get('link')}><Transclude /></a>;
   }
 
   onClick($event) : void {
-    console.log('Link clicked');
     $event.stopPropagation();
     $event.preventDefault();
   }

@@ -74,7 +74,7 @@ function buildFlow(cb) {
 
 function buildPreFlow(cb) {
   return gulp.src(clientSrcDir + '/flow/**/*.js')
-    .pipe(babel({"presets": ["react"], "plugins": ["syntax-flow"]}))
+    .pipe(babel({"presets": ["react"], "plugins": ["syntax-flow", ["transform-react-jsx", { "pragma": "h" }]]}))
     .on('error', notify.onError('<%= error.message %>'))
     .pipe(gulp.dest(flowDest))
     .on('end', cb);
@@ -82,7 +82,7 @@ function buildPreFlow(cb) {
 
 function buildBrowserify(cb) {
   return browserify(flowDest + "/app.js")
-    .transform("babelify", {presets: ["es2015", "react"], plugins: ["transform-flow-strip-types", "transform-class-properties"]})
+    .transform("babelify", {presets: ["es2015"], plugins: ["transform-flow-strip-types", "transform-class-properties"]})
     .on('error', function (error) {
       console.log('Error', error.message);
       this.emit('end');
@@ -90,18 +90,18 @@ function buildBrowserify(cb) {
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init())
+    // .pipe(sourcemaps.init())
     .pipe(jsmin())
-    .pipe(sourcemaps.write())
+    // .pipe(sourcemaps.write())
     .pipe(gulp.dest(buildDest + "/js/"))
     .on('end', cb);
 }
 
 function buildSass(cb) {
   return gulp.src(clientSrcDir + '/sass/**/*.scss')
-    .pipe(sourcemaps.init())
+    // .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(sourcemaps.write())
+    // .pipe(sourcemaps.write())
     .pipe(autoprefixer())
     .pipe(cssmin())
     .pipe(gulp.dest(buildDest + "/css"));

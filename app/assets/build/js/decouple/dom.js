@@ -1,3 +1,4 @@
+import { render } from 'preact';
 export default class DecoupleDOM {
 
   constructor() {
@@ -23,22 +24,37 @@ export default class DecoupleDOM {
 
   bootstrapDirectives() {
     this.directives.forEach(directive => {
-      let elements = this.find('[' + directive.attribute + '],[directive-' + directive.attribute + ']');
+      let elements = this.find('[' + directive.attribute + '],[directive-' + directive.attribute + '],[data-directive-' + directive.attribute + ']');
       elements.forEach(element => {
-        let props = new Map();
-        if (directive.scope) {
-          directive.scope.forEach(variable => {
+        let scope = new Map();
+        if (directive.scoped) {
+          directive.scoped.forEach(variable => {
             if (element.hasAttribute(variable)) {
-              props.set(variable, element.getAttribute(variable));
+              scope.set(variable, element.getAttribute(variable));
             } else if (element.hasAttribute('directive-' + variable)) {
-              props.set(variable, element.getAttribute('directive-' + variable));
+              scope.set(variable, element.getAttribute('directive-' + variable));
+            } else if (element.hasAttribute('data-directive-' + variable)) {
+              scope.set(variable, element.getAttribute('data-directive-' + variable));
             } else {
-              props.set(variable, false);
+              scope.set(variable, false);
             }
           });
         }
-        var instance = new (this.directives.get(directive.attribute))(props);
+
+        var instance = new (this.directives.get(directive.attribute))(scope);
+        if (instance.wrap) instance.children.push(element);
         let rendered = instance.__render();
+
+        // Get DOM nodes from React elements
+        if (rendered.$$typeof || rendered.nodeName) {
+          let div = document.createElement('div');
+          render(rendered, div);
+          if (div.childNodes.length) {
+            rendered = div.childNodes[0];
+          } else {
+            rendered = '';
+          }
+        }
 
         // Attach necessary events
         this.events.forEach((method, event) => {
@@ -52,6 +68,16 @@ export default class DecoupleDOM {
           element.replace(rendered);
         } else if (instance.prepend) {
           element.insertBefore(rendered, element.firstChild);
+        } else if (instance.transclude) {
+          console.log(rendered);
+          let transclude = rendered.querySelector('.transclude');
+          if (transclude) {
+            element.parentNode.replaceChild(rendered, element);
+            rendered.replaceChild(element, transclude);
+          } else {
+            element.parentNode.replaceChild(rendered, element);
+            rendered.appendChild(element);
+          }
         } else {
           element.appendChild(rendered);
         }

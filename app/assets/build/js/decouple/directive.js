@@ -1,21 +1,21 @@
-import React from 'react';
 import Decouple from './decouple.js';
 
 export default class Directive {
 
-  constructor(options) {
-    this.options = options;
+  constructor(scope) {
+    this.scope = scope;
+    this.children = [];
   }
 
   __render() {
-    if (this.boot) {
-      let res = this.boot();
+    if (this.render) {
+      let res = this.render();
       if (typeof res == 'string') {
         return Decouple.dom.stringToNode(res, "text/html");
       } else {
         return res;
       }
     }
-    throw "A Decouple Directive must declare a boot() method";
+    throw "A Decouple Directive must declare a render() method";
   }
 }

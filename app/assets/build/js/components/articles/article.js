@@ -1,39 +1,39 @@
-import React from 'react';
+import { h, Component } from 'preact';
 
-export default class Article extends React.Component {
+export default class Article extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    return React.createElement(
+    return h(
       "div",
       { className: "item" },
-      React.createElement(
+      h(
         "div",
         { className: "ui large rounded image" },
-        React.createElement("img", { src: this.props.article.image }),
-        React.createElement(
+        h("img", { src: this.props.article.image }),
+        h(
           "a",
           { className: "like ui corner label" },
-          React.createElement("i", { className: "like icon" })
+          h("i", { className: "like icon" })
         )
       ),
-      React.createElement("h4", { className: "header" }),
-      React.createElement(
+      h("h4", { className: "header" }),
+      h(
         "div",
         { className: "content" },
-        React.createElement(
+        h(
           "div",
           { className: "name" },
           this.props.article.title
         ),
-        React.createElement(
+        h(
           "p",
           { className: "description" },
           this.props.article.content
         ),
-        React.createElement(
+        h(
           "div",
           { className: "extra" },
           this.props.article.date

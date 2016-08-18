@@ -5,7 +5,7 @@ class :layouts:header extends :decouple:ui:base {
     Schema schema @required,
     string title @required;
 
-  public function compose() {
+  protected function compose() : XHPRoot {
     return
       <header>
         <h1>{$this->getAttribute('title')}</h1>

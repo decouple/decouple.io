@@ -11,7 +11,7 @@ class QueryTest extends TestCase {
       "type" => "mysql",
       "host" => "localhost"
     }, "decouple", "secret");
-    $schema = $driver->schema('decouple');
+    $schema = $driver->schema('decouple_test');
     $table = $schema->table('articles');
     $query = $table->select();
     $failed = false;
