@@ -52,15 +52,15 @@ class RouterTest extends TestCase {
     };
     $decoupler = new Decoupler($dependencies);
     $router = new Router($decoupler);
-    $router->serve('/foo/([^/]+)', function(Request $request, RouteDependency $dep) : mixed {
+    $router->serve('GET', '/foo/([^/]+)', function(Request $request, RouteDependency $dep) : mixed {
       return $request->routeParams->at(1) . $dep->double(21);
     });
-    $router->serve('/bar/([^/]+)', function(Request $request, RouteDependency $dep) : mixed {
+    $router->serve('GET', '/bar/([^/]+)', function(Request $request, RouteDependency $dep) : mixed {
       return $dep->double(21) . $request->routeParams->at(1);
     });
-    $router->serve('/baz/bar', ['Test\HTTP\Fixture\TestController','baz']);
+    $router->serve('GET', '/baz/bar', ['Test\HTTP\Fixture\TestController','baz']);
     $tc = $decoupler->injectInstance('Test\HTTP\Fixture\TestController');
-    $router->serve('/baz/([^/]+)', [$tc,'bang']);
+    $router->serve('GET', '/baz/([^/]+)', [$tc,'bang']);
     $function = $router->route($request);
     $result = $decoupler->inject($function);
     return $result;

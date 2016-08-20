@@ -2,7 +2,7 @@
 require_once "cli/functions.hh";
 // Error handling
 set_exception_handler('cli_exception_handler');
-set_error_handler('cli_error_handler', E_ERROR);
+set_error_handler('cli_error_handler', 2047);
 
 use Decouple\CLI\App;
 use Decouple\CLI\Request\Request;
@@ -15,9 +15,8 @@ $commands = hack_require(dirname(dirname(__FILE__)) . "/config/cli/commands.hh")
 
 set_include_path(get_include_path() . PATH_SEPARATOR . $paths->get('src') . PATH_SEPARATOR . $paths->get('commands'));
 
-
 $args = new Vector($argv);
-if($args->get(0) == 'decouple.hh') { $args->removeKey(0); }
+// if($args->get(0) == 'decouple.hh' || $args->get(0) == './decouple') { $args->removeKey(0); }
 $request = new Request($args);
 
 $app = new App($request, $decoupler, new Paths($paths), $commands);

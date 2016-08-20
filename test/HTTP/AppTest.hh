@@ -9,6 +9,8 @@ use Decouple\Registry\Paths;
 use Decouple\Log\Log;
 use Decouple\Test\TestCase;
 use Decouple\CLI\Console;
+use Test\HTTP\Fixture\FooController;
+use Test\HTTP\Fixture\BarController;
 class AppTest extends TestCase {
   public function __construct(private Paths $paths) {
     // Placeholder for injection
@@ -68,13 +70,13 @@ class AppTest extends TestCase {
     $tmp_app->addServices($services);
 
     // Load a map of routes
-    $routes = Map {
-        "/foo/([^/]+)" => "Test\\HTTP\\Fixture\\FooController",
-        "/bar/([^/]+)" => "Test\\HTTP\\Fixture\\BarController@baz",
+    $routes = Vector {
+        ["ALL", "/foo/([^/]+)", "Test\\HTTP\\Fixture\\FooController"],
+        ["ALL", "/bar/([^/]+)", "Test\\HTTP\\Fixture\\BarController@baz"],
     };
     $tmp_app->addRoutes($routes);
     // Add a single route
-    $tmp_app->addRoute("/bang/([^/]+)", function(Log $log) {
+    $tmp_app->addRoute("GET", "/bang/([^/]+)", function(Log $log) {
       $log->write("Bang!");
       return "Bang!";
     });

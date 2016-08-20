@@ -1,8 +1,4 @@
 <?hh // partial
-use API\TestController;
-return Map {
-  "/" => "FrontController@index",
-  "/news/(.*)" => "NewsController",
-  "/test" => "FrontController@test",
-  "/api/test/(.*)" => TestController::class
-};
+use Decouple\Singleton\Router;
+Router::get("/", "FrontController@index");
+Router::restful("/news/(.*)", "NewsController");
