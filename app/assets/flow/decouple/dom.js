@@ -1,9 +1,11 @@
 /* @flow */
 import { render } from 'preact'
+import Directive from './directive.js'
+
 export default class DecoupleDOM {
-  Map : directives;
-  Map : templates;
-  Map : events;
+  directives: Map<string, Directive>;
+  templates: Map<string, string>;
+  events: Map<string, string>;
 
   constructor() {
     this.directives = new Map();
@@ -22,7 +24,7 @@ export default class DecoupleDOM {
     ]);
   }
 
-  find(selector : string) : array {
+  find(selector : string) : NodeList<*> {
     return document.querySelectorAll(selector);
   }
 
@@ -30,7 +32,7 @@ export default class DecoupleDOM {
     this.directives.set(directive.attribute, directive);
   }
 
-  directiveInstance(string : name) : Directive {
+  directiveInstance(name : string) : Directive {
     if(this.directives.has(name)) {
       return new this.directives.get(name);
     }
@@ -56,9 +58,10 @@ export default class DecoupleDOM {
           });
         }
 
-        var instance = new (this.directives.get(directive.attribute))(scope);
+        var directiveClass : Directive = this.directives.get(directive.attribute);
+        var instance : Directive = new (directiveClass)(scope);
         if(instance.wrap) instance.children.push(element);
-        let rendered = instance.__render();
+        let rendered : * = instance.__render();
 
         // Get DOM nodes from React elements
         if(rendered.$$typeof || rendered.nodeName) {
@@ -85,7 +88,6 @@ export default class DecoupleDOM {
         } else if(instance.prepend) {
           element.insertBefore(rendered, element.firstChild);
         } else if(instance.transclude) {
-          console.log(rendered);
           let transclude = rendered.querySelector('.transclude');
           if(transclude) {
             element.parentNode.replaceChild(rendered, element);

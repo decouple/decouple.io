@@ -3,7 +3,7 @@
 import {h,Component} from 'preact'
 
 export default class Article extends Component {
-  constructor(props) {
+  constructor(props : Object) {
     super(props);
   }
 
