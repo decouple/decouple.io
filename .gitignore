@@ -4,3 +4,4 @@ node_modules/
 .hg/
 .hgignore
 app/assets/build
+app/logs/*.log
