@@ -1,5 +1,5 @@
 <?hh // decl
-class :news:articleListItem extends :x:element {
+class :articles:grid_item extends :x:element {
   attribute
     KeyedTraversable<string,mixed> article @required;
 

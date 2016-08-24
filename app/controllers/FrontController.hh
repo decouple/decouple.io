@@ -12,8 +12,8 @@ class FrontController {
   ): :xhp {
     $articles = $schema->table('articles')->select()->fetchAll();
     return
-      <layouts:front schema={$schema} title="Decouple">
-        <news:articles articles={$articles} />
+      <layouts:front>
+        <articles:grid articles={$articles} />
       </layouts:front>
     ;
   }

@@ -7,7 +7,7 @@ use ReflectionParameter;
 use ReflectionFunction;
 use Exception;
 class Decoupler {
-  private static \Decouple\Decoupler\Decoupler $instance;
+  public static ?\Decouple\Decoupler\Decoupler $instance;
   public static function instance() : \Decouple\Decoupler\Decoupler {
     if(!static::$instance) {
       static::$instance = new \Decouple\Decoupler\Decoupler(Map {});
@@ -15,10 +15,10 @@ class Decoupler {
     return static::$instance;
   }
   public static function setAll(Map<string, mixed> $dependencies, bool $verify = true): void {
-    return static::instance()->setAll($dependencies, $verify);
+    static::instance()->setAll($dependencies, $verify);
   }
   public static function set(string $name, mixed $dependency, bool $verify = true): void {
-    return static::instance()->set($name, $dependency, $verify);
+    static::instance()->set($name, $dependency, $verify);
   }
   public static function contains(string $name): bool {
     return static::instance()->contains($name);
@@ -30,7 +30,7 @@ class Decoupler {
     return static::instance()->getAll();
   }
   public function verifyName(string $name): void {
-    return static::instance()->verifyName($name);
+    static::instance()->verifyName($name);
   }
   public static function injectObject(mixed $object): mixed {
     return static::instance()->injectObject($object);
@@ -56,7 +56,7 @@ class Decoupler {
   public static function inject(mixed $target): mixed {
     return static::instance()->inject($target);
   }
-  static function getCaller() : string {
+  public static function getCaller() : string {
     return static::instance()->getCaller();
   }
 }

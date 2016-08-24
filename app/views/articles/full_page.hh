@@ -1,5 +1,5 @@
 <?hh // decl
-class :news:articleFullPage extends :decouple:ui:base {
+class :articles:full_page extends :decouple:ui:base {
   attribute
     KeyedTraversable<string,mixed> article @required;
 

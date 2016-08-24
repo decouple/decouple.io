@@ -12,11 +12,29 @@ var gulp = require('gulp'),
     cssmin = require('gulp-cssmin'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
-    del = require('del');
+    del = require('del'),
+    browserSync = require('browser-sync').create();
 
 var clientSrcDir = "app/assets",
   flowDest = "app/assets/build/js",
-  buildDest = "public/assets";
+  buildDest = "public/assets",
+  viewDir = "app/views";
+
+gulp.task('sync', ['build','sass','fonts'], function() {
+    browserSync.init({
+      proxy: 'decouple.app'
+    });
+    gulp.watch(viewDir + '/**/*.hh').on('change', browserSync.reload);
+    gulp.watch(clientSrcDir + '/sass/**/*.scss', ['sass']);
+    gulp.watch(clientSrcDir + '/sass/**/*.js', ['build'])
+      .on('change', browserSync.reload);;
+});
+
+gulp.task('fonts', function(cb) {
+  gulp.src('./node_modules/mdi/fonts/**/*.{eot,svg,ttf,woff,woff2}')
+    .pipe(gulp.dest(buildDest + '/fonts'))
+    .on('end', cb);
+});
 
 gulp.task('flow:babel', function(cb) {
   buildPreFlow(cb);
@@ -31,6 +49,7 @@ gulp.task('flow:watch', function() {
 });
 
 gulp.task('default', function() {
+  gulp.start('fonts');
   gulp.start('build');
   gulp.start('sass');
 });
@@ -104,5 +123,6 @@ function buildSass(cb) {
     // .pipe(sourcemaps.write())
     .pipe(autoprefixer())
     .pipe(cssmin())
-    .pipe(gulp.dest(buildDest + "/css"));
+    .pipe(gulp.dest(buildDest + "/css"))
+    .pipe(browserSync.stream());
 }

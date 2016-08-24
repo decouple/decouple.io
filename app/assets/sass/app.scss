@@ -1,6 +1,11 @@
 /* Import base styles*/
 @import "base/dom";
+@import "base/spacing";
+@import "base/typography";
+@import "base/forms";
 
 /* Import component styles*/
-@import "components/news";
+@import "components/buttons";
+@import "components/articles";
 @import "components/nav";
+@import "components/grid";

@@ -1,0 +1,40 @@
+$padding-multiplier: 8;
+$margin-multiplier: 8;
+$padding-levels: 8;
+$margin-levels: 8;
+
+@for $i from 1 through $margin-levels {
+  .m-t-#{$i} {
+    margin-top: #{$i * $margin-multiplier}px !important;
+  }
+  .m-l-#{$i} {
+    margin-left: #{$i * $margin-multiplier}px !important;
+  }
+  .m-r-#{$i} {
+    margin-right: #{$i * $margin-multiplier}px !important;
+  }
+  .m-b-#{$i} {
+    margin-bottom: #{$i * $margin-multiplier}px !important;
+  }
+  .m-a-#{$i} {
+    margin: #{$i * $margin-multiplier}px !important;
+  }
+}
+
+@for $i from 1 through $padding-levels {
+  .p-t-#{$i} {
+    margin-top: #{$i * $padding-multiplier}px !important;
+  }
+  .p-l-#{$i} {
+    margin-left: #{$i * $padding-multiplier}px !important;
+  }
+  .p-r-#{$i} {
+    margin-right: #{$i * $padding-multiplier}px !important;
+  }
+  .p-b-#{$i} {
+    margin-bottom: #{$i * $padding-multiplier}px !important;
+  }
+  .p-a-#{$i} {
+    margin: #{$i}px !important;
+  }
+}

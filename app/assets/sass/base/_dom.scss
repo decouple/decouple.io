@@ -1,12 +1,20 @@
 html, body {
   height: 100%;
-  font-family: Menlo, Helvetica, sans-serif;
   font-size: 16px;
 }
-h1 {
-  margin-bottom: 4px;
+html, body, * {
+  font-family: "Menlo";
+  letter-spacing: 1.25;
+  font-smoothing: antialiased;
 }
 a {
   text-decoration: none;
   color: black;
 }
+.text-center {
+  text-align: center;
+}
+h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
+.pull-right { float: right; }
+.pull-left { float: left; }
+.clearfix { clear: both; }
